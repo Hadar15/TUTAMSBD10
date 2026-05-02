@@ -13,9 +13,15 @@ export default function MainPage() {
   const fetchNotes = async () => {
     try {
       const res = await axios.get("/api/notes");
-      setNotes(res.data);
+      if (Array.isArray(res.data)) {
+        setNotes(res.data);
+      } else {
+        console.error("Data notes tidak valid:", res.data);
+        setNotes([]);
+      }
     } catch (err) {
       console.error(err);
+      setNotes([]);
     }
   };
 
