@@ -10,8 +10,13 @@ export default function AddNote() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await axios.post("/api/notes", { title, content });
-    navigate("/");
+    try {
+      await axios.post("/api/notes", { title, content });
+      navigate("/");
+    } catch (error) {
+      console.error(error);
+      alert("Gagal menambahkan notes: " + (error.response?.data?.error || error.message));
+    }
   };
 
   return (
